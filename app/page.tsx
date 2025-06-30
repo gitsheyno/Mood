@@ -1,5 +1,11 @@
 import Link from "next/link";
-export default function Home() {
+import { auth } from "@clerk/nextjs/server";
+
+export default async function Home() {
+  const { userId } = await auth();
+  console.log("User ID:", userId);
+  const href = userId ? "/journal" : "/new-user";
+  console.log("Redirecting to:", href);
   return (
     <div className="w-screen h-screen bg-black flex justify-center items-center text-white">
       <div className="w-full max-w-[600px] mx-auto">
@@ -9,7 +15,7 @@ export default function Home() {
           just be honest.
         </p>
         <div>
-          <Link href="/journal">
+          <Link href="journal">
             <button className="bg-blue-600 px-4  py-2 rounded-lg text-xl">
               get started
             </button>
